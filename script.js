@@ -5,6 +5,8 @@ var useSpecial = "";
 var useNumber = "";
 var charCount = "";
 
+// assigning the arrays of possible choices for the final password array 
+// there's probably an easier way to do this for the nubmers and letters...
 const specialCharactersArray = ["!","\"","#", "$", "%", "&", "'", "(", ")", "*", "+", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
 
 const numbersArray = [0,1,2,3,4,5,6,7,8,9];
@@ -13,7 +15,7 @@ const uppercaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "
 
 const lowercaseArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-
+var passwordArray = [];
 
 // querySelector for the generate button
 var generateBtn = document.querySelector("#generate");
@@ -26,7 +28,6 @@ generateBtn.addEventListener("click", () => {
   askNumber();
   askCharCount()
   writePassword();
-  results();
 });
 
 // ask if the user wants upper case characters in the password
@@ -42,7 +43,7 @@ function askUpper() {
     alert("Please enter 'Yes' or 'No'");
     askUpper();
   }
-  console.log(useUpperCase);
+  console.log("User choose", useUpperCase, "for uppercase");
 }
 
 // ask if the user wants lower case characters in the password
@@ -58,7 +59,7 @@ function askLower() {
     alert("Please enter 'Yes' or 'No'");
     askLower();
   }
-  console.log(useLowerCase);
+  console.log("User choose", useLowerCase, "for lowercase");
 }
 
 // ask the user if they want special characters in the password
@@ -74,7 +75,7 @@ function askSpecial() {
     alert("Please enter 'Yes' or 'No'");
     askSpecial();
   }
-  console.log(useSpecial);
+  console.log("User choose", useSpecial, "for special characters");
 }
 
 // ask the user if they want numbers in the password
@@ -90,7 +91,7 @@ function askNumber() {
     alert("Please enter 'Yes' or 'No'");
     askNumber();
   }
-  console.log(useNumber);
+  console.log("User choose", useNumber, "for numbers");
 }
 
 // ask the user how many characters they want in the password
@@ -102,33 +103,52 @@ function askCharCount() {
     alert("Please enter a whole number between 8 and 128");
     askCharCount();
   }
-  console.log(charCount);
-}
 
-// log the results to the console (make sure global variables are accessable)
-function results() {
-  console.log("Results:", useUpperCase, useLowerCase, useNumber, useSpecial, charCount);
+  buildResults()
+  console.log("User choose", charCount, "for character count");
 }
 
 // build the final password array based on the users' choices
-function buildResults(useUpperCase, useLowerCase, useSpecial, useNumber, charCount) {
+function buildResults() {
 
+  if (useUpperCase === true) {
+    finalArray = passwordArray.concat(uppercaseArray);
+    console.log("upper was added " + finalArray );
+  }
+
+  if (useLowerCase === true) {
+    finalArray = passwordArray.concat(lowercaseArray, finalArray);
+    console.log("lower was added " + finalArray );
+  }
+
+  if (useSpecial === true) {
+    finalArray = passwordArray.concat(specialCharactersArray, finalArray);
+    console.log("special character was added " + finalArray );
+  }
+
+  if (useNumber === true) {
+    finalArray = passwordArray.concat(numbersArray, finalArray);
+    console.log("number was added " + finalArray );
+  }
+
+  //default to using only lowercase characters if the user chooses all 4 options as false
+  if (useUpperCase === false && useLowerCase === false && useSpecial === false && useNumber === false) {
+    finalArray = lowercaseArray;
+  }
+  return finalArray;
 }
-
 
 // function that generates the password
 // loops through the final built password array and returns a string of the password
 function generatePassword() {
   const pwArray = [];
   for (let i = 0; i < charCount; i++) {
-    const characters = specialCharactersArray[Math.floor(Math.random() * specialCharactersArray.length)]
+    const characters = finalArray[Math.floor(Math.random() * finalArray.length)]
     pwArray.push(characters);
   }
 
   return pwArray.join('');
 }
-
-console.log(pwArray);
 
 // Write password to the #password input
 function writePassword() {
