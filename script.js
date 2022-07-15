@@ -6,7 +6,7 @@ var useNumber = "";
 var charCount = "";
 
 // assigning the arrays of possible choices for the final password array 
-// there's probably an easier way to do this for the nubmers and letters...
+// there's probably an easier way to do this...
 const specialCharactersArray = ["!","\"","#", "$", "%", "&", "'", "(", ")", "*", "+", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
 
 const numbersArray = [0,1,2,3,4,5,6,7,8,9];
@@ -32,7 +32,7 @@ generateBtn.addEventListener("click", () => {
 
 // ask if the user wants upper case characters in the password
 function askUpper() {
-  let upperCaseChoice = prompt("Do you want to require Upper Case characters?");
+  let upperCaseChoice = prompt("Do you want to use Upper Case characters?");
   if (upperCaseChoice.toLowerCase() == "yes") {
     useUpperCase = true;
     alert("Ok, upper case characters will be used.");
@@ -48,7 +48,7 @@ function askUpper() {
 
 // ask if the user wants lower case characters in the password
 function askLower() {
-  let lowerCaseChoice = prompt("Do you want to require Lower Case characters?");
+  let lowerCaseChoice = prompt("Do you want to use Lower Case characters?");
   if (lowerCaseChoice.toLowerCase() == "yes") {
     useLowerCase = true;
     alert("Ok, lower case characters will be used.");
@@ -64,7 +64,7 @@ function askLower() {
 
 // ask the user if they want special characters in the password
 function askSpecial() {
-  let specialChoice = prompt("Do you want to require Special characters?");
+  let specialChoice = prompt("Do you want to use Special characters?");
   if (specialChoice.toLowerCase() == "yes") {
     useSpecial = true;
     alert("Ok, special characters will be used.");
@@ -80,7 +80,7 @@ function askSpecial() {
 
 // ask the user if they want numbers in the password
 function askNumber() {
-  let numberChoice = prompt("Do you want to require Numbers?");
+  let numberChoice = prompt("Do you want to use Numbers?");
   if (numberChoice.toLowerCase() == "yes") {
     useNumber = true;
     alert("Ok, numbers will be used.");
@@ -103,9 +103,9 @@ function askCharCount() {
     alert("Please enter a whole number between 8 and 128");
     askCharCount();
   }
+  console.log("User choose", charCount, "for character count");
 
   buildResults()
-  console.log("User choose", charCount, "for character count");
 }
 
 // build the final password array based on the users' choices
@@ -113,40 +113,37 @@ function buildResults() {
 
   if (useUpperCase === true) {
     finalArray = passwordArray.concat(uppercaseArray);
-    console.log("upper was added " + finalArray );
   }
 
   if (useLowerCase === true) {
     finalArray = passwordArray.concat(lowercaseArray, finalArray);
-    console.log("lower was added " + finalArray );
   }
 
   if (useSpecial === true) {
     finalArray = passwordArray.concat(specialCharactersArray, finalArray);
-    console.log("special character was added " + finalArray );
   }
 
   if (useNumber === true) {
     finalArray = passwordArray.concat(numbersArray, finalArray);
-    console.log("number was added " + finalArray );
   }
 
   //default to using only lowercase characters if the user chooses all 4 options as false
   if (useUpperCase === false && useLowerCase === false && useSpecial === false && useNumber === false) {
     finalArray = lowercaseArray;
   }
+  
+  console.log("Final Array length:", finalArray.length)
   return finalArray;
 }
 
 // function that generates the password
-// loops through the final built password array and returns a string of the password
+// loops through the final array and returns a string of the password
 function generatePassword() {
   const pwArray = [];
   for (let i = 0; i < charCount; i++) {
     const characters = finalArray[Math.floor(Math.random() * finalArray.length)]
     pwArray.push(characters);
   }
-
   return pwArray.join('');
 }
 
@@ -156,7 +153,4 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-  console.log(password);
 }
-
-
