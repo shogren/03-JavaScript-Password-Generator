@@ -1,21 +1,33 @@
-// Assignment Code
-var generateBtn = document.querySelector("#generate");
-
+// assigning some global variables 
 var useUpperCase = "";
 var useLowerCase = "";
 var useSpecial = "";
 var useNumber = "";
+var charCount = "";
 
-// Add event listener to generate button
+const specialCharactersArray = ["!","\"","#", "$", "%", "&", "'", "(", ")", "*", "+", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
+
+const numbersArray = [0,1,2,3,4,5,6,7,8,9];
+
+const uppercaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+const lowercaseArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+
+
+// querySelector for the generate button
+var generateBtn = document.querySelector("#generate");
+
+// Add event listener to generate button, run the prompt functions
 generateBtn.addEventListener("click", () => {    
   askUpper();
   askLower();
   askSpecial()
   askNumber();
+  askCharCount()
   writePassword();
   results();
 });
-
 
 // ask if the user wants upper case characters in the password
 function askUpper() {
@@ -33,6 +45,7 @@ function askUpper() {
   console.log(useUpperCase);
 }
 
+// ask if the user wants lower case characters in the password
 function askLower() {
   let lowerCaseChoice = prompt("Do you want to require Lower Case characters?");
   if (lowerCaseChoice.toLowerCase() == "yes") {
@@ -48,7 +61,7 @@ function askLower() {
   console.log(useLowerCase);
 }
 
-
+// ask the user if they want special characters in the password
 function askSpecial() {
   let specialChoice = prompt("Do you want to require Special characters?");
   if (specialChoice.toLowerCase() == "yes") {
@@ -64,6 +77,7 @@ function askSpecial() {
   console.log(useSpecial);
 }
 
+// ask the user if they want numbers in the password
 function askNumber() {
   let numberChoice = prompt("Do you want to require Numbers?");
   if (numberChoice.toLowerCase() == "yes") {
@@ -79,14 +93,42 @@ function askNumber() {
   console.log(useNumber);
 }
 
-function results() {
-  console.log("Results:", useUpperCase, useLowerCase, useNumber, useSpecial);
+// ask the user how many characters they want in the password
+function askCharCount() {
+  let charCountChoice = parseInt(prompt("How many Characters do you want? \n Choose a number between 8 and 128"));
+  if (charCountChoice >= 8 && charCountChoice <= 128) {
+    charCount = charCountChoice;
+  } else {
+    alert("Please enter a whole number between 8 and 128");
+    askCharCount();
+  }
+  console.log(charCount);
 }
+
+// log the results to the console (make sure global variables are accessable)
+function results() {
+  console.log("Results:", useUpperCase, useLowerCase, useNumber, useSpecial, charCount);
+}
+
+// build the final password array based on the users' choices
+function buildResults(useUpperCase, useLowerCase, useSpecial, useNumber, charCount) {
+
+}
+
 
 // function that generates the password
+// loops through the final built password array and returns a string of the password
 function generatePassword() {
+  const pwArray = [];
+  for (let i = 0; i < charCount; i++) {
+    const characters = specialCharactersArray[Math.floor(Math.random() * specialCharactersArray.length)]
+    pwArray.push(characters);
+  }
 
+  return pwArray.join('');
 }
+
+console.log(pwArray);
 
 // Write password to the #password input
 function writePassword() {
@@ -94,18 +136,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-  //just for visualizing
-  passwordText.value = "password!";
-
-
+  console.log(password);
 }
 
 
-specialCharactersArray = ["!","\"","#", "$", "%", "&", "'", "(", ")", "*", "+", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
-
-numbersArray = [0,1,2,3,4,5,6,7,8,9];
-
-uppercaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-lowercaseArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
