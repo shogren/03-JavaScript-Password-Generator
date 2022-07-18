@@ -21,7 +21,7 @@ var passwordArray = [];
 var generateBtn = document.querySelector("#generate");
 
 // Add event listener to generate button, run the prompt functions
-generateBtn.addEventListener("click", () => {    
+generateBtn.addEventListener("click", () => {
   askUpper();
   askLower();
   askSpecial()
@@ -32,13 +32,11 @@ generateBtn.addEventListener("click", () => {
 
 // ask if the user wants upper case characters in the password
 function askUpper() {
-  let upperCaseChoice = prompt("Do you want to use Upper Case characters?");
+  let upperCaseChoice = prompt("Do you want to use Upper Case characters?" + "\r\n" +  "\r\n" + "Enter 'Yes' or 'No'" + "\r\n");
   if (upperCaseChoice.toLowerCase() == "yes") {
     useUpperCase = true;
-    alert("Ok, upper case characters will be used.");
   } else if (upperCaseChoice.toLowerCase() == "no") {
     useUpperCase = false;
-    alert("Ok, no upper case characters will be used.");
   } else {
     alert("Please enter 'Yes' or 'No'");
     askUpper();
@@ -48,13 +46,11 @@ function askUpper() {
 
 // ask if the user wants lower case characters in the password
 function askLower() {
-  let lowerCaseChoice = prompt("Do you want to use Lower Case characters?");
+  let lowerCaseChoice = prompt("Do you want to use Lower Case characters?" + "\r\n" +  "\r\n" + "Enter 'Yes' or 'No'" + "\r\n");
   if (lowerCaseChoice.toLowerCase() == "yes") {
     useLowerCase = true;
-    alert("Ok, lower case characters will be used.");
   } else if (lowerCaseChoice.toLowerCase() == "no") {
     useLowerCase = false;
-    alert("Ok, no lower case characters will be used.");
   } else {
     alert("Please enter 'Yes' or 'No'");
     askLower();
@@ -64,13 +60,11 @@ function askLower() {
 
 // ask the user if they want special characters in the password
 function askSpecial() {
-  let specialChoice = prompt("Do you want to use Special characters?");
+  let specialChoice = prompt("Do you want to use Special characters?" + "\r\n" +  "\r\n" + "Enter 'Yes' or 'No'" + "\r\n");
   if (specialChoice.toLowerCase() == "yes") {
     useSpecial = true;
-    alert("Ok, special characters will be used.");
   } else if (specialChoice.toLowerCase() == "no") {
     useSpecial = false;
-    alert("Ok, no special characters will be used.");
   } else {
     alert("Please enter 'Yes' or 'No'");
     askSpecial();
@@ -80,13 +74,11 @@ function askSpecial() {
 
 // ask the user if they want numbers in the password
 function askNumber() {
-  let numberChoice = prompt("Do you want to use Numbers?");
+  let numberChoice = prompt("Do you want to use Numbers?" + "\r\n" +  "\r\n" + "Enter 'Yes' or 'No'" + "\r\n");
   if (numberChoice.toLowerCase() == "yes") {
     useNumber = true;
-    alert("Ok, numbers will be used.");
   } else if (numberChoice.toLowerCase() == "no") {
     useNumber = false;
-    alert("Ok, no numbers will be used.");
   } else {
     alert("Please enter 'Yes' or 'No'");
     askNumber();
@@ -96,7 +88,7 @@ function askNumber() {
 
 // ask the user how many characters they want in the password
 function askCharCount() {
-  let charCountChoice = parseInt(prompt("How many Characters do you want? \n Choose a number between 8 and 128"));
+  let charCountChoice = parseInt(prompt("How many Characters do you want?\nChoose a number between 8 and 128"));
   if (charCountChoice >= 8 && charCountChoice <= 128) {
     charCount = charCountChoice;
   } else {
@@ -129,7 +121,8 @@ function buildResults() {
 
   //default to using only lowercase characters if the user chooses all 4 options as false
   if (useUpperCase === false && useLowerCase === false && useSpecial === false && useNumber === false) {
-    finalArray = lowercaseArray;
+        finalArray = lowercaseArray;
+        alert("You chose 'No' for all options. Defaulting to all lowercase");
   }
   
   console.log("Final Array length:", finalArray.length)
@@ -151,6 +144,6 @@ function generatePassword() {
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
+  
   passwordText.value = password;
 }
